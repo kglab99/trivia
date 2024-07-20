@@ -49,7 +49,7 @@ export default function NumQuestionsChoice() {
       setTimeout(() => {
         setReadyToFetch(true);
         console.log("dupa");
-      }, 5100);
+      }, 3000);
     }
   }, [selectedCategory]);
 

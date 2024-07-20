@@ -6,20 +6,45 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import Button from "@mui/joy/Button";
 import Divider from "@mui/joy/Divider";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { QuizContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 
 export default function QuizResults() {
-  const { questions, userAnswers, resetQuiz } = useContext(QuizContext);
+  const {
+    resetQuiz,
+    questions,
+    userAnswers,
+  } = useContext(QuizContext);
   const navigate = useNavigate(); // Create the navigate function
+  const [correctAnswers, setCorrectAnswers] = useState([]);
+  const [incorrectAnswers, setIncorrectAnswers] = useState([]);
 
-  const correctAnswers = userAnswers.filter(
-    (userAnswer) => userAnswer.answer === userAnswer.question.correct_answer
-  );
-  const incorrectAnswers = userAnswers.filter(
-    (userAnswer) => userAnswer.answer !== userAnswer.question.correct_answer
-  );
+  useEffect(() => {
+    // Retrieve results from session storage
+    const storedResults = sessionStorage.getItem("quizResults");
+    if (storedResults) {
+      const parsedResults = JSON.parse(storedResults);
+      setCorrectAnswers(parsedResults.correctAnswers);
+      setIncorrectAnswers(parsedResults.incorrectAnswers);
+    } else {
+      // If no results in session storage, calculate them
+      const correct = userAnswers.filter(
+        (userAnswer) => userAnswer.answer === userAnswer.question.correct_answer
+      );
+      const incorrect = userAnswers.filter(
+        (userAnswer) => userAnswer.answer !== userAnswer.question.correct_answer
+      );
+      setCorrectAnswers(correct);
+      setIncorrectAnswers(incorrect);
+
+      // Store results in session storage
+      sessionStorage.setItem("quizResults", JSON.stringify({
+        correctAnswers: correct,
+        incorrectAnswers: incorrect
+      }));
+    }
+  }, [userAnswers]);
 
   const handleReload = () => {
     resetQuiz(); // Reset the quiz state

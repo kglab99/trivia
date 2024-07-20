@@ -74,7 +74,7 @@ export default function App() {
     sessionStorage.removeItem("userAnswers");
     sessionStorage.removeItem("quizCompleted");
     sessionStorage.removeItem("quizState");
-
+    sessionStorage.removeItem("quizResults")
     console.log("Cleared session storage");
 
     setSelectedCategory(category);
@@ -194,6 +194,7 @@ export default function App() {
     sessionStorage.removeItem("quizCompleted");
     sessionStorage.removeItem("questions");
     sessionStorage.removeItem("quizState");
+    sessionStorage.removeItem("quizResults")
   };
 
   return (
