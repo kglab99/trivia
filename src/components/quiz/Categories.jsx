@@ -19,10 +19,10 @@ export default function Categories() {
     setSelectedCategoryAndConsoleLog,
     loadingCategories,
     setLoadingCategories,
-    quizCompleted
+    quizCompleted,
   } = useContext(QuizContext);
   const [categories, setCategories] = useState([]);
-  const [quizInProgress, setQuizInProgress] = useState(false)
+  const [quizInProgress, setQuizInProgress] = useState(false);
   useEffect(() => {
     fetch("https://opentdb.com/api_category.php")
       .then((response) => response.json())
@@ -43,9 +43,8 @@ export default function Categories() {
 
   useEffect(() => {
     if (!quizCompleted && currentQuestionIndex > 0) {
-        setQuizInProgress(true);
+      setQuizInProgress(true);
     }
-  
   }, [quizCompleted, currentQuestionIndex]);
 
   const handleResumeQuiz = () => {

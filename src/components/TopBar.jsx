@@ -18,11 +18,11 @@ export default function TopBar() {
         alt="Logo"
         onClick={handleLogoClick}
         sx={{
-          width: 30, // Set width as needed
-          height: "auto", // Maintain aspect ratio
-          cursor: "pointer", // Indicate clickable element
-          mr: 2, // Margin to the right of the image
-          filter: "invert(1)", // Apply color inversion
+          width: 30, 
+          height: "auto",
+          cursor: "pointer",
+          mr: 2,
+          filter: "invert(1)",
         }}
       />
       <Typography onClick={handleLogoClick} level="h3">

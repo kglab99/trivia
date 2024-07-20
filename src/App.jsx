@@ -22,7 +22,7 @@ export const QuizContext = createContext({
   setQuestionCount: () => {},
   fetchQuestionsFlag: false,
   setFetchQuestionsFlag: () => {},
-  onQuestionsFetchComplete: () => {}, // Callback for when questions fetch is complete
+  onQuestionsFetchComplete: () => {},
   questionsFetched: false,
 });
 
@@ -56,31 +56,29 @@ export default function App() {
   const [questionsFetched, setQuestionsFetched] = useState(false);
   const [fetchQuestionsFlag, setFetchQuestionsFlag] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const onQuestionsSliderSelect = (number) => {
     setNumQuestions(number);
     console.log(numQuestions);
-    setFetchQuestionsFlag(true); // Trigger fetch process
+    setFetchQuestionsFlag(true);
     sessionStorage.setItem("numQuestions", number);
     console.log("Selected number of questions:", number);
   };
 
   const setSelectedCategoryAndConsoleLog = (category) => {
-    // Clear previous questions and other related state before setting the new category
     sessionStorage.removeItem("questions");
     sessionStorage.removeItem("numQuestions");
     sessionStorage.removeItem("currentQuestionIndex");
     sessionStorage.removeItem("userAnswers");
     sessionStorage.removeItem("quizCompleted");
     sessionStorage.removeItem("quizState");
-    sessionStorage.removeItem("quizResults")
+    sessionStorage.removeItem("quizResults");
     console.log("Cleared session storage");
 
     setSelectedCategory(category);
     sessionStorage.setItem("selectedCategory", JSON.stringify(category));
 
-    // Reset local state
     setNumQuestions(null);
     setCurrentQuestionIndex(0);
     setUserAnswers([]);
@@ -124,7 +122,6 @@ export default function App() {
       setLoading(false);
     }
   }, [fetchReady]);
-  
 
   useEffect(() => {
     if (fetchQuestionsFlag && numQuestions !== null) {
@@ -132,9 +129,9 @@ export default function App() {
         setQuestions(questions);
         console.log(questions);
         sessionStorage.setItem("questions", JSON.stringify(questions));
-        setQuestionsFetched(true); // Update this state to indicate questions are fetched
-        setFetchQuestionsFlag(false); // Reset fetch flag
-        console.log("Questions fetched:", questions); // Log fetched questions
+        setQuestionsFetched(true); 
+        setFetchQuestionsFlag(false); 
+        console.log("Questions fetched:", questions);
       } else if (error) {
         console.error("Failed to fetch questions:", error);
       }
@@ -184,7 +181,7 @@ export default function App() {
     setQuizCompleted(false);
     setQuestions([]);
     setQuestionsFetched(false);
-    setFetchQuestionsFlag(false); // Reset fetch flag
+    setFetchQuestionsFlag(false);
     setConfirmed(false);
 
     sessionStorage.removeItem("selectedCategory");
@@ -194,7 +191,7 @@ export default function App() {
     sessionStorage.removeItem("quizCompleted");
     sessionStorage.removeItem("questions");
     sessionStorage.removeItem("quizState");
-    sessionStorage.removeItem("quizResults")
+    sessionStorage.removeItem("quizResults");
   };
 
   return (

@@ -11,14 +11,9 @@ export default function NumQuestionsChoice() {
   const {
     onQuestionsSliderSelect,
     selectedCategory,
-    setQuestionCount,
-    setQuestions,
-    setQuestionsFetched,
     questionsFetched,
-    questions,
     loading,
     setLoading,
-    confirmed,
     setConfirmed,
   } = useContext(QuizContext);
 

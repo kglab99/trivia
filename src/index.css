@@ -1,10 +1,7 @@
-/* src/index.css */
-html, body {
-    min-height: 100%;
-    margin: 0;
-    color-scheme: dark; /* Ensures that the browser knows dark mode is being used */
-    background-color: #121212; /* Dark background color for body */
-  }
-
-
-  
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  color-scheme: light;
+  background-color: #121212;
+}

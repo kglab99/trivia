@@ -11,11 +11,7 @@ import { QuizContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 
 export default function QuizResults() {
-  const {
-    resetQuiz,
-    questions,
-    userAnswers,
-  } = useContext(QuizContext);
+  const { resetQuiz, questions, userAnswers } = useContext(QuizContext);
   const navigate = useNavigate(); // Create the navigate function
   const [correctAnswers, setCorrectAnswers] = useState([]);
   const [incorrectAnswers, setIncorrectAnswers] = useState([]);
@@ -39,10 +35,13 @@ export default function QuizResults() {
       setIncorrectAnswers(incorrect);
 
       // Store results in session storage
-      sessionStorage.setItem("quizResults", JSON.stringify({
-        correctAnswers: correct,
-        incorrectAnswers: incorrect
-      }));
+      sessionStorage.setItem(
+        "quizResults",
+        JSON.stringify({
+          correctAnswers: correct,
+          incorrectAnswers: incorrect,
+        })
+      );
     }
   }, [userAnswers]);
 
