@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchQuestions } from "../logic/fetchQuestions";
-import { decodeHTMLEntities, shuffleArray } from "../logic/additional";
+import { decodeHTMLEntities } from "../logic/additional";
 
 export default function useFetchQuestions(
   confirmed,
@@ -18,7 +18,6 @@ export default function useFetchQuestions(
         setFetchReady(false);
         try {
           const data = await fetchQuestions(selectedCategory.id, numQuestions);
-          console.log("Fetched data:", data);
 
           const decodedQuestions = data.results.map((question) => {
             const decodedQuestion = decodeHTMLEntities(question.question);
@@ -37,17 +36,15 @@ export default function useFetchQuestions(
             };
           });
 
-          const shuffledQuestions = decodedQuestions.map((question) => ({
-            ...question,
-            answers: shuffleArray([
-              ...question.incorrect_answers,
-              question.correct_answer,
-            ]),
-          }));
+          // const shuffledQuestions = decodedQuestions.map((question) => ({
+          //   ...question,
+          //   answers: shuffleArray([
+          //     ...question.incorrect_answers,
+          //     question.correct_answer,
+          //   ]),
+          // }));
 
-          console.log("Shuffled questions:", shuffledQuestions);
-
-          setQuestions(shuffledQuestions);
+          setQuestions(decodedQuestions);
         } catch (err) {
           setError(err);
         } finally {

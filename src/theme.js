@@ -1,15 +1,14 @@
 import { extendTheme } from "@mui/joy/styles";
 
-// Create a dark theme configuration
 export const theme = extendTheme({
   colorSchemes: {
-    dark: {
+    main: {
       palette: {
         background: {
-          body: "#121212", // Dark background color for body
+          body: "#121212", 
         },
         text: {
-          primary: "#e0e0e0", // Light text color
+          primary: "#e0e0e0", 
         },
       },
     },
@@ -18,7 +17,7 @@ export const theme = extendTheme({
     JoyButton: {
       styleOverrides: {
         root: {
-          fontWeight: 400, // Set the font weight for buttons globally
+          fontWeight: 400, 
         },
       },
     },

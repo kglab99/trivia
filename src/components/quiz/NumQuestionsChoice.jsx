@@ -20,7 +20,6 @@ export default function NumQuestionsChoice() {
   const [questionsCount, setQuestionsCount] = useState(10);
   const [maxQuestions, setMaxQuestions] = useState(10);
   const [readyToFetch, setReadyToFetch] = useState(false);
-  //Api limits to 5 seconds before allowing next fetch
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,8 +42,7 @@ export default function NumQuestionsChoice() {
       fetchQuestionCount();
       setTimeout(() => {
         setReadyToFetch(true);
-        console.log("dupa");
-      }, 3000);
+      }, 2000);
     }
   }, [selectedCategory]);
 
@@ -65,14 +63,13 @@ export default function NumQuestionsChoice() {
 
   useEffect(() => {
     if (readyToFetch) {
-      console.log("dupa");
       setConfirmed(true);
     }
   }),
     [readyToFetch];
 
   if (!selectedCategory) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (loading) {
@@ -114,6 +111,11 @@ export default function NumQuestionsChoice() {
           sx={{
             maxWidth: "700px",
             width: "85%",
+            "& .MuiSlider-thumb": {
+                backgroundColor: "primary", // Same color as border
+              },
+              "& .MuiSlider-thumb:hover, & .MuiSlider-thumb.Mui-focusVisible, & .MuiSlider-thumb.Mui-active":
+                {},
           }}
         />
         <Typography
