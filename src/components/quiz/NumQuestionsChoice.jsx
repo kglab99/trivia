@@ -6,6 +6,8 @@ import Button from "@mui/joy/Button";
 import { useNavigate } from "react-router-dom";
 import { QuizContext } from "../../App";
 import Loading from "../Loading";
+import { motion, AnimatePresence } from "framer-motion";
+import MotionWrapper from "../../MotionWrapper"; // Import the custom MotionWrapper
 
 export default function NumQuestionsChoice() {
   const {
@@ -52,7 +54,7 @@ export default function NumQuestionsChoice() {
     }
   }, [questionsReady, loading, navigate]);
 
-  const handleChange = (value) => {
+  const handleChange = (event, value) => {
     setQuestionsCount(value);
   };
 
@@ -65,79 +67,80 @@ export default function NumQuestionsChoice() {
     if (readyToFetch) {
       setConfirmed(true);
     }
-  }),
-    [readyToFetch];
-
-
+  }, [readyToFetch]);
 
   if (loading) {
     return <Loading />;
   }
 
-  if (!loading) {
-    return (
-      <Box
-        component="div"
-        sx={{
-          p: 2,
-          flexDirection: "column",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <Box sx={{ maxWidth: "700px", width: "100%", textAlign: "left" }}>
-          <Typography
-            level="h2"
+  return (
+    <AnimatePresence>
+      {!loading && (
+    <MotionWrapper>
+
+          <Box
+            component="div"
             sx={{
-              mb: 2,
-              color: "primary.main",
+              p: 2,
+              flexDirection: "column",
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            Choose Number of Questions
-          </Typography>
-        </Box>
-        <Slider
-          size="lg"
-          color="primary"
-          variant="soft"
-          defaultValue={10}
-          min={10}
-          max={maxQuestions}
-          step={1}
-          onChange={handleChange}
-          value={questionsCount}
-          sx={{
-            maxWidth: "700px",
-            width: "85%",
-            "& .MuiSlider-thumb": {
-                backgroundColor: "primary", // Same color as border
-              },
-              "& .MuiSlider-thumb:hover, & .MuiSlider-thumb.Mui-focusVisible, & .MuiSlider-thumb.Mui-active":
-                {},
-          }}
-        />
-        <Typography
-          level="h2"
-          sx={{
-            mb: 2,
-            color: "primary.main",
-            mt: 2,
-          }}
-        >
-          {questionsCount}
-        </Typography>
-        <Button
-          onClick={handleSelect}
-          size="lg"
-          variant="solid"
-          sx={{
-            mt: 2,
-            backgroundColor: "primary.main",
-          }}
-        >
-          Confirm
-        </Button>
-      </Box>
-    );
-  }
+            <Box sx={{ maxWidth: "700px", width: "100%", textAlign: "left" }}>
+              <Typography
+                level="h2"
+                sx={{
+                  mb: 2,
+                  color: "primary.main",
+                }}
+              >
+                Choose Number of Questions
+              </Typography>
+            </Box>
+            <Slider
+              size="lg"
+              color="primary"
+              variant="soft"
+              defaultValue={10}
+              min={10}
+              max={maxQuestions}
+              step={1}
+              onChange={handleChange}
+              value={questionsCount}
+              sx={{
+                maxWidth: "700px",
+                width: "85%",
+                "& .MuiSlider-thumb": {
+                  backgroundColor: "primary", // Same color as border
+                },
+                "& .MuiSlider-thumb:hover, & .MuiSlider-thumb.Mui-focusVisible, & .MuiSlider-thumb.Mui-active": {},
+              }}
+            />
+            <Typography
+              level="h2"
+              sx={{
+                mb: 2,
+                color: "primary.main",
+                mt: 2,
+              }}
+            >
+              {questionsCount}
+            </Typography>
+            <Button
+              onClick={handleSelect}
+              size="lg"
+              variant="solid"
+              sx={{
+                mt: 2,
+                backgroundColor: "primary.main",
+              }}
+            >
+              Confirm
+            </Button>
+          </Box>
+              </MotionWrapper>
+      )}
+    </AnimatePresence>
+  );
 }

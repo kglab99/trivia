@@ -5,6 +5,9 @@ import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
 import { motion, AnimatePresence } from "framer-motion";
 
+// Create a motion-enabled Button component
+const MotionButton = motion(Button);
+
 export default function QuizQuestion({
   question,
   index,
@@ -36,13 +39,10 @@ export default function QuizQuestion({
       >
         <motion.div
           key={index} // Trigger animation when index changes
-          initial={{ opacity: 0, scale: 0.97 }} // Slightly smaller and transparent
-          animate={{ opacity: 1, scale: 1 }} // Scale to full size and fully opaque
-          exit={{ opacity: 0, scale: 0.97 }} // Scale down and fade out
-          transition={{ 
-            duration: 0.4, 
-            ease: "easeInOut" // Simple easing function for smooth transitions
-          }} // Smooth transition
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 20 }}
+          transition={{ duration: 0.1, ease: "easeInOut" }} // Faster transition
           style={{
             position: "absolute",
             display: "flex",
@@ -83,40 +83,49 @@ export default function QuizQuestion({
             <CardContent orientation="vertical">
               {isTrueFalse ? (
                 <>
-                  <Button
+                  <MotionButton
                     key="true"
                     onClick={() => handleAnswer("True")}
+                    whileHover={{ scale: 1.1, backgroundColor: "#e0e0e0" }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.1, ease: "easeInOut" }} // Faster transition
                     sx={{
                       mt: 1,
                       mb: 1,
                     }}
                   >
                     True
-                  </Button>
-                  <Button
+                  </MotionButton>
+                  <MotionButton
                     key="false"
                     onClick={() => handleAnswer("False")}
+                    whileHover={{ scale: 1.1, backgroundColor: "#e0e0e0" }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.1, ease: "easeInOut" }} // Faster transition
                     sx={{
                       mt: 0.5,
                       mb: 0.5,
                     }}
                   >
                     False
-                  </Button>
+                  </MotionButton>
                 </>
               ) : (
                 [...question.incorrect_answers, question.correct_answer].map(
                   (answer, idx) => (
-                    <Button
+                    <MotionButton
                       key={idx}
                       onClick={() => handleAnswer(answer)}
+                      whileHover={{ scale: 1.1, backgroundColor: "#e0e0e0" }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ duration: 0.1, ease: "easeInOut" }} // Faster transition
                       sx={{
                         mt: 0.5,
                         mb: 0.5,
                       }}
                     >
                       {answer}
-                    </Button>
+                    </MotionButton>
                   )
                 )
               )}
