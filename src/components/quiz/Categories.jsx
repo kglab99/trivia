@@ -21,19 +21,35 @@ export default function Categories() {
     setLoadingCategories,
     quizCompleted,
   } = useContext(QuizContext);
+
   const [categories, setCategories] = useState([]);
   const [quizInProgress, setQuizInProgress] = useState(false);
+
   useEffect(() => {
-    fetch("https://opentdb.com/api_category.php")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("https://opentdb.com/api_category.php");
+        const data = await response.json();
         setCategories(data.trivia_categories);
+        localStorage.setItem(
+          "categories",
+          JSON.stringify(data.trivia_categories)
+        );
         setLoadingCategories(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching categories:", error);
         setLoadingCategories(false);
-      });
+      }
+    };
+
+    const storedCategories = localStorage.getItem("categories");
+    if (storedCategories) {
+      setCategories(JSON.parse(storedCategories));
+      setLoadingCategories(false);
+    } else {
+      setLoadingCategories(true);
+      fetchCategories();
+    }
   }, [setLoadingCategories]);
 
   const handleCategorySelect = (category) => {

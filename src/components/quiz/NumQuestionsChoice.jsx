@@ -11,7 +11,7 @@ export default function NumQuestionsChoice() {
   const {
     onQuestionsSliderSelect,
     selectedCategory,
-    questionsFetched,
+    questionsReady,
     loading,
     setLoading,
     setConfirmed,
@@ -32,8 +32,8 @@ export default function NumQuestionsChoice() {
           const data = await response.json();
           const totalQuestions =
             data.category_question_count.total_question_count;
-          const effectiveQuestionCount = Math.min(50, totalQuestions);
-          setMaxQuestions(effectiveQuestionCount);
+          const maxQuestionCount = Math.min(50, totalQuestions);
+          setMaxQuestions(maxQuestionCount);
         } catch (error) {
           console.error("Error fetching question count:", error);
         }
@@ -42,17 +42,17 @@ export default function NumQuestionsChoice() {
       fetchQuestionCount();
       setTimeout(() => {
         setReadyToFetch(true);
-      }, 2000);
+      }, 3000);
     }
   }, [selectedCategory]);
 
   useEffect(() => {
-    if (questionsFetched && !loading) {
+    if (questionsReady && !loading) {
       navigate(`/quiz/0`);
     }
-  }, [questionsFetched, loading, navigate]);
+  }, [questionsReady, loading, navigate]);
 
-  const handleChange = (event, value) => {
+  const handleChange = (value) => {
     setQuestionsCount(value);
   };
 
@@ -68,9 +68,7 @@ export default function NumQuestionsChoice() {
   }),
     [readyToFetch];
 
-  if (!selectedCategory) {
-    return <Loading />;
-  }
+
 
   if (loading) {
     return <Loading />;

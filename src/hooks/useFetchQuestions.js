@@ -6,14 +6,13 @@ export default function useFetchQuestions(
   confirmed,
   selectedCategory,
   numQuestions,
-  fetchQuestionsFlag
 ) {
   const [fetchedQuestions, setQuestions] = useState([]);
   const [fetchReady, setFetchReady] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (fetchQuestionsFlag && selectedCategory && numQuestions && confirmed) {
+    if (selectedCategory && numQuestions && confirmed) {
       const fetchData = async () => {
         setFetchReady(false);
         try {
@@ -29,20 +28,11 @@ export default function useFetchQuestions(
             );
 
             return {
-              ...question,
               question: decodedQuestion,
               correct_answer: decodedCorrectAnswer,
               incorrect_answers: decodedIncorrectAnswers,
             };
           });
-
-          // const shuffledQuestions = decodedQuestions.map((question) => ({
-          //   ...question,
-          //   answers: shuffleArray([
-          //     ...question.incorrect_answers,
-          //     question.correct_answer,
-          //   ]),
-          // }));
 
           setQuestions(decodedQuestions);
         } catch (err) {
@@ -54,7 +44,7 @@ export default function useFetchQuestions(
 
       fetchData();
     }
-  }, [selectedCategory, numQuestions, fetchQuestionsFlag, confirmed]);
+  }, [selectedCategory, numQuestions, confirmed]);
 
   return { fetchedQuestions, fetchReady, error };
 }

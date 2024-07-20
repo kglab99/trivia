@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function QuizResults() {
   const { resetQuiz, questions, userAnswers } = useContext(QuizContext);
-  const navigate = useNavigate(); // Create the navigate function
+  const navigate = useNavigate();
   const [correctAnswers, setCorrectAnswers] = useState([]);
   const [incorrectAnswers, setIncorrectAnswers] = useState([]);
 
@@ -45,9 +45,9 @@ export default function QuizResults() {
     }
   }, [userAnswers]);
 
-  const handleReload = () => {
-    resetQuiz(); // Reset the quiz state
-    navigate("/"); // Navigate to the home page
+  const handleRestart = () => {
+    resetQuiz();
+    navigate("/");
   };
 
   return (
@@ -65,8 +65,8 @@ export default function QuizResults() {
         <Typography
           level="h2"
           sx={{
-            mb: 2, // Margin-bottom for spacing
-            color: "primary.main", // Example color
+            mb: 2,
+            color: "primary.main",
           }}
         >
           Quiz completed!
@@ -75,8 +75,8 @@ export default function QuizResults() {
         <Typography
           level="body-md"
           sx={{
-            mb: 0, // Margin-bottom for spacing
-            color: "primary.main", // Example color
+            mb: 0,
+            color: "primary.main",
           }}
         >
           You got {correctAnswers.length} out of {questions.length} correct.
@@ -155,7 +155,7 @@ export default function QuizResults() {
         </Card>
       ))}
 
-      <Button variant="solid" color="primary" onClick={handleReload}>
+      <Button variant="solid" color="primary" onClick={handleRestart}>
         Restart Quiz
       </Button>
     </Box>

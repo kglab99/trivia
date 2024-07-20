@@ -20,8 +20,6 @@ export const QuizContext = createContext({
   selectedCategory: null,
   resetQuiz: () => {},
   setQuestionCount: () => {},
-  fetchQuestionsFlag: false,
-  setFetchQuestionsFlag: () => {},
   onQuestionsFetchComplete: () => {},
   questionsFetched: false,
 });
@@ -53,15 +51,16 @@ export default function App() {
     console.log("Saved:" + saved);
     return saved ? JSON.parse(saved) : [];
   });
-  const [questionsFetched, setQuestionsFetched] = useState(false);
-  const [fetchQuestionsFlag, setFetchQuestionsFlag] = useState(false);
+  
+  const [questionsReady, setQuestionsReady] = useState(false);
+  const [saveQuestionsFlag, setSaveQuestionsFlag] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const onQuestionsSliderSelect = (number) => {
     setNumQuestions(number);
     console.log(numQuestions);
-    setFetchQuestionsFlag(true);
+    setSaveQuestionsFlag(true);
     sessionStorage.setItem("numQuestions", number);
     console.log("Selected number of questions:", number);
   };
@@ -83,8 +82,8 @@ export default function App() {
     setCurrentQuestionIndex(0);
     setUserAnswers([]);
     setQuestions([]);
-    setQuestionsFetched(false);
-    setFetchQuestionsFlag(false);
+    setQuestionsReady(false);
+    setSaveQuestionsFlag(false);
     setQuizCompleted(false);
     setConfirmed(false);
 
@@ -108,7 +107,7 @@ export default function App() {
     confirmed,
     selectedCategory,
     numQuestions,
-    fetchQuestionsFlag
+    setSaveQuestionsFlag
   );
 
   useEffect(() => {
@@ -124,19 +123,16 @@ export default function App() {
   }, [fetchReady]);
 
   useEffect(() => {
-    if (fetchQuestionsFlag && numQuestions !== null) {
+    if (saveQuestionsFlag && numQuestions !== null) {
       if (questions.length > 0) {
-        setQuestions(questions);
-        console.log(questions);
+        console.log(saveQuestionsFlag);
         sessionStorage.setItem("questions", JSON.stringify(questions));
-        setQuestionsFetched(true); 
-        setFetchQuestionsFlag(false); 
+        setQuestionsReady(true); 
+        setSaveQuestionsFlag(false); 
         console.log("Questions fetched:", questions);
-      } else if (error) {
-        console.error("Failed to fetch questions:", error);
       }
     }
-  }, [fetchQuestionsFlag, numQuestions, questions, error]);
+  }, [saveQuestionsFlag, numQuestions, questions]);
 
   const handleAnswer = (answer) => {
     setUserAnswers((prevAnswers) => {
@@ -180,8 +176,8 @@ export default function App() {
     setUserAnswers([]);
     setQuizCompleted(false);
     setQuestions([]);
-    setQuestionsFetched(false);
-    setFetchQuestionsFlag(false);
+    setQuestionsReady(false);
+    setSaveQuestionsFlag(false);
     setConfirmed(false);
 
     sessionStorage.removeItem("selectedCategory");
@@ -215,10 +211,7 @@ export default function App() {
         userAnswers,
         setQuestionCount,
         resetQuiz,
-        fetchQuestionsFlag,
-        setFetchQuestionsFlag,
-        questionsFetched,
-        setQuestionsFetched,
+        questionsReady,
         setQuestions,
       }}
     >
