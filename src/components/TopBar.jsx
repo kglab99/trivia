@@ -1,19 +1,20 @@
 import Box from "@mui/joy/Box"; // Use Box from @mui/joy
 import Typography from "@mui/joy/Typography";
 import { useNavigate } from "react-router-dom";
+import bulbPng from "/bulb.png";
 
 export default function TopBar() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleLogoClick = () => {
+  const handleLogoClick = () => {
     navigate("/");
-};
+  };
 
   return (
     <Box component="div" sx={{ p: 2, display: "flex", alignItems: "center" }}>
       <Box
         component="img"
-        src="bulb.png"
+        src={bulbPng}
         alt="Logo"
         onClick={handleLogoClick}
         sx={{
