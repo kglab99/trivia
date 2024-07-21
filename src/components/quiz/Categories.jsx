@@ -21,7 +21,7 @@ export default function Categories() {
   const navigate = useNavigate();
   const {
     currentQuestionIndex,
-    setSelectedCategoryAndConsoleLog,
+    setSelectedCategoryAndReset,
     loadingCategories,
     setLoadingCategories,
     quizCompleted,
@@ -58,7 +58,7 @@ export default function Categories() {
   }, [setLoadingCategories]);
 
   const handleCategorySelect = (category) => {
-    setSelectedCategoryAndConsoleLog(category);
+    setSelectedCategoryAndReset(category);
     navigate("/num-of-questions");
   };
 

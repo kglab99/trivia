@@ -4,3 +4,4 @@ export const decodeHTMLEntities = (text) => {
   textArea.innerHTML = text;
   return textArea.value;
 };
+
