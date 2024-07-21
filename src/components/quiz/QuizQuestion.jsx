@@ -1,9 +1,11 @@
+import { useState, useEffect } from "react";
 import { Box } from "@mui/joy";
 import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
 import { motion, AnimatePresence } from "framer-motion";
+import CustomMotionButton from "../../MotionButton";
 
 // Create a motion-enabled Button component
 const MotionButton = motion(Button);
@@ -14,6 +16,27 @@ export default function QuizQuestion({
   totalQuestions,
   handleAnswer,
 }) {
+  const [animationValues, setAnimationValues] = useState({ initialX: 1000, exitX: -1000 });
+
+  useEffect(() => {
+    const updateAnimationValues = () => {
+      if (window.innerWidth <= 600) { // Mobile width threshold
+        setAnimationValues({ initialX: 500, exitX: -500 });
+      } else {
+        setAnimationValues({ initialX: 1000, exitX: -1000 });
+      }
+    };
+
+    // Update animation values on component mount
+    updateAnimationValues();
+
+    // Add event listener to update animation values on screen resize
+    window.addEventListener("resize", updateAnimationValues);
+
+    // Clean up the event listener on component unmount
+    return () => window.removeEventListener("resize", updateAnimationValues);
+  }, []);
+
   // Determine if the question is true/false by checking the possible answers
   const isTrueFalse =
     question.incorrect_answers.length === 1 &&
@@ -35,14 +58,14 @@ export default function QuizQuestion({
       }}
     >
       <AnimatePresence
-        mode="wait" // Ensures that the new element waits for the old one to exit
+        mode="popLayout" // Ensures that the new element waits for the old one to exit
       >
         <motion.div
           key={index} // Trigger animation when index changes
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: animationValues.initialX }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 20 }}
-          transition={{ duration: 0.1, ease: "easeInOut" }} // Faster transition
+          exit={{ opacity: 0, x: animationValues.exitX }}
+          transition={{ duration: 0.4, ease: "easeInOut" }} // Faster transition
           style={{
             position: "absolute",
             display: "flex",
@@ -83,49 +106,28 @@ export default function QuizQuestion({
             <CardContent orientation="vertical">
               {isTrueFalse ? (
                 <>
-                  <MotionButton
-                    key="true"
+                  <CustomMotionButton
+                    key={"true"}
                     onClick={() => handleAnswer("True")}
-                    whileHover={{ scale: 1.1, backgroundColor: "#e0e0e0" }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ duration: 0.1, ease: "easeInOut" }} // Faster transition
-                    sx={{
-                      mt: 1,
-                      mb: 1,
-                    }}
                   >
                     True
-                  </MotionButton>
-                  <MotionButton
-                    key="false"
+                  </CustomMotionButton>
+                  <CustomMotionButton
+                    key={"false"}
                     onClick={() => handleAnswer("False")}
-                    whileHover={{ scale: 1.1, backgroundColor: "#e0e0e0" }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ duration: 0.1, ease: "easeInOut" }} // Faster transition
-                    sx={{
-                      mt: 0.5,
-                      mb: 0.5,
-                    }}
                   >
                     False
-                  </MotionButton>
+                  </CustomMotionButton>
                 </>
               ) : (
                 [...question.incorrect_answers, question.correct_answer].map(
                   (answer, idx) => (
-                    <MotionButton
+                    <CustomMotionButton
                       key={idx}
                       onClick={() => handleAnswer(answer)}
-                      whileHover={{ scale: 1.1, backgroundColor: "#e0e0e0" }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ duration: 0.1, ease: "easeInOut" }} // Faster transition
-                      sx={{
-                        mt: 0.5,
-                        mb: 0.5,
-                      }}
                     >
                       {answer}
-                    </MotionButton>
+                    </CustomMotionButton>
                   )
                 )
               )}

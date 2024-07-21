@@ -74,8 +74,9 @@ export default function NumQuestionsChoice() {
   }
 
   return (
-    <AnimatePresence>
-      {!loading && (
+ <AnimatePresence
+        mode="wait" // Ensures that the new element waits for the old one to exit
+      >      {!loading && (
     <MotionWrapper>
 
           <Box
@@ -92,6 +93,7 @@ export default function NumQuestionsChoice() {
                 level="h2"
                 sx={{
                   mb: 2,
+                  
                   color: "primary.main",
                 }}
               >
@@ -109,8 +111,8 @@ export default function NumQuestionsChoice() {
               onChange={handleChange}
               value={questionsCount}
               sx={{
-                maxWidth: "700px",
-                width: "85%",
+                maxWidth: "680px",
+                width: "90%",
                 "& .MuiSlider-thumb": {
                   backgroundColor: "primary", // Same color as border
                 },

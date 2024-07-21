@@ -9,7 +9,7 @@ import ListItemContent from "@mui/joy/ListItemContent";
 import { KeyboardArrowRight } from "@mui/icons-material";
 import Divider from "@mui/joy/Divider";
 import Button from "@mui/joy/Button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { QuizContext } from "../../App";
 import MotionWrapper from "../../MotionWrapper"; // Import the custom MotionWrapper
 
@@ -75,71 +75,75 @@ export default function Categories() {
   };
 
   return (
-    <MotionWrapper>
-      <Box
-        component="div"
-        sx={{
-          p: 2,
-          flexDirection: "column",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        {quizInProgress && (
-          <MotionButton
-            onClick={handleResumeQuiz}
-            size="md"
-            variant="outlined"
-            whileHover={{ scale: 1.1, backgroundColor: "#e0e0e0" }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            sx={{
-              mt: 0,
-              mb: 2,
-              backgroundColor: "primary.main",
-            }}
-          >
-            Go back to quiz
-          </MotionButton>
-        )}
-
-        <Box sx={{ width: "70%", textAlign: "left" }}>
-          {!loadingCategories && (
-            <Typography
-              level="h2"
+    <AnimatePresence
+      mode="wait" // Ensures that the new element waits for the old one to exit
+    >
+      <MotionWrapper>
+        <Box
+          component="div"
+          sx={{
+            p: 2,
+            flexDirection: "column",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {quizInProgress && (
+            <MotionButton
+              onClick={handleResumeQuiz}
+              size="md"
+              variant="outlined"
+              whileHover={{ scale: 1.1, backgroundColor: "#e0e0e0" }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
               sx={{
-                mb: 2, // Margin-bottom for spacing
-                color: "primary.main", // Example color
+                mt: 0,
+                mb: 2,
+                backgroundColor: "primary.main",
               }}
             >
-              Choose category
-            </Typography>
+              Go back to quiz
+            </MotionButton>
           )}
-        </Box>
 
-        <Box sx={{ maxWidth: "700px", width: "100%" }}>
-          <List
-            sx={{
-              "--ListItem-paddingY": "16px",
-            }}
-          >
-            {categories.map((category) => (
-              <div key={category.id}>
-                <MotionListItemButton
-                  onClick={() => handleCategorySelect(category)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ duration: 0.2, ease: "easeInOut" }}
-                >
-                  <ListItemContent>{category.name}</ListItemContent>
-                  <KeyboardArrowRight />
-                </MotionListItemButton>
-                <Divider orientation="horizontal" />
-              </div>
-            ))}
-          </List>
+          <Box sx={{ maxWidth: "700px", width: "100%", textAlign: "left" }}>
+            {!loadingCategories && (
+              <Typography
+                level="h2"
+                sx={{
+                  mb: 2, // Margin-bottom for spacing
+                  color: "primary.main", // Example color
+                }}
+              >
+                Choose category
+              </Typography>
+            )}
+          </Box>
+
+          <Box sx={{ maxWidth: "700px", width: "100%" }}>
+            <List
+              sx={{
+                "--ListItem-paddingY": "16px",
+              }}
+            >
+              {categories.map((category) => (
+                <div key={category.id}>
+                  <MotionListItemButton
+                    onClick={() => handleCategorySelect(category)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                  >
+                    <ListItemContent>{category.name}</ListItemContent>
+                    <KeyboardArrowRight />
+                  </MotionListItemButton>
+                  <Divider orientation="horizontal" />
+                </div>
+              ))}
+            </List>
+          </Box>
         </Box>
-      </Box>
-    </MotionWrapper>
+      </MotionWrapper>
+    </AnimatePresence>
   );
 }

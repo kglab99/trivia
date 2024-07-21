@@ -56,6 +56,9 @@ export default function QuizResults() {
   };
 
   return (
+    <AnimatePresence
+    mode="popLayout" // Ensures that the new element waits for the old one to exit
+  >
     <MotionWrapper>
       <Box
         component="div"
@@ -176,5 +179,6 @@ export default function QuizResults() {
         </MotionButton>
       </Box>
     </MotionWrapper>
+    </AnimatePresence>
   );
 }
