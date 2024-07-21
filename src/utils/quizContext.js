@@ -1,4 +1,3 @@
-// useQuizContext.js
 import { useState, useEffect } from 'react';
 import { getItem, setItem, clearAll } from './sessionStorageUtils';
 import { handleAnswer } from './handleAnswer';
@@ -7,6 +6,7 @@ import { onQuestionsSliderSelect } from './onQuestionsSliderSelect';
 import useFetchQuestions from '../fetch/useFetchQuestions';
 
 export const useQuizContext = () => {
+
   const [selectedCategory, setSelectedCategory] = useState(() => getItem("selectedCategory", true) || null);
   const [numQuestions, setNumQuestions] = useState(() => getItem("numQuestions") || null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(() => getItem("currentQuestionIndex") || 0);
@@ -14,12 +14,16 @@ export const useQuizContext = () => {
   const [quizCompleted, setQuizCompleted] = useState(() => getItem("quizCompleted", true) || false);
   const [questions, setQuestions] = useState(() => getItem("questions", true) || []);
 
+
   const [questionsReady, setQuestionsReady] = useState(false);
+  //flag for saving questions to session storage
   const [saveQuestionsFlag, setSaveQuestionsFlag] = useState(false);
+  //flag to start fetching questions when user chooses question count
   const [confirmed, setConfirmed] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
-  const { fetchedQuestions, fetchReady, error } = useFetchQuestions(
+  const { fetchedQuestions, fetchReady } = useFetchQuestions(
     confirmed,
     selectedCategory,
     numQuestions,
