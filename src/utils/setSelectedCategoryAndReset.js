@@ -17,7 +17,6 @@ export const setSelectedCategoryAndReset = (
     sessionStorage.removeItem("quizCompleted");
     sessionStorage.removeItem("quizState");
     sessionStorage.removeItem("quizResults");
-    console.log("Cleared session storage");
   
     setSelectedCategory(category);
     sessionStorage.setItem("selectedCategory", JSON.stringify(category));
