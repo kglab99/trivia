@@ -9,7 +9,7 @@ Quizz App is a dynamic and interactive quiz application built using React and Ma
 ## Features
 
 - **Category Selection**: Choose from a variety of trivia categories.
-- **Question Number Selection**: Specify the number of questions for the quiz.
+- **Question Count Selection**: Specify the number of questions for the quiz.
 - **Detailed Results**: Review your answers with correct and incorrect indications after completing the quiz.
 - **Session Persistence**: Utilize React Router and session storage to enable users to navigate back, change a question, refresh the page, go to the main page, and continue the quiz seamlessly.
 - **Responsive Design**: Optimized for both desktop and mobile devices.
