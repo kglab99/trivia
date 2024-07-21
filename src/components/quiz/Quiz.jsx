@@ -8,14 +8,14 @@ const Quiz = () => {
   const { questionIndex } = useParams();
   const {
     quizCompleted,
-    questions = [], // Default to empty array if undefined
+    questions = [],
     handleAnswer,
     currentQuestionIndex,
     setCurrentQuestionIndex,
   } = useContext(QuizContext);
+  const index = parseInt(questionIndex, 10);
 
   useEffect(() => {
-    const index = parseInt(questionIndex, 10);
 
     if (Array.isArray(questions) && questions.length > 0) {
       if (index < 0 || index >= questions.length) {
@@ -29,6 +29,7 @@ const Quiz = () => {
     questions,
     questionIndex,
     navigate,
+    index,
     currentQuestionIndex,
     setCurrentQuestionIndex,
   ]);
@@ -39,8 +40,7 @@ const Quiz = () => {
     }
   }, [quizCompleted, navigate]);
 
-  const index = parseInt(questionIndex, 10) || 0;
-  const question = Array.isArray(questions) ? questions[index] : null;
+  const question = questions[index] || null;
 
   const handleAnswerWrapped = (answer) => {
     handleAnswer(answer);

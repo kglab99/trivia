@@ -1,4 +1,4 @@
-import Box from "@mui/joy/Box"; // Use Box from @mui/joy
+import Box from "@mui/joy/Box";
 import Typography from "@mui/joy/Typography";
 import { useNavigate } from "react-router-dom";
 import bulbPng from "/bulb.png";
@@ -11,21 +11,30 @@ export default function TopBar() {
   };
 
   return (
-    <Box component="div" sx={{ p: 2, display: "flex", alignItems: "center" }}>
+    <Box
+      component="div"
+      sx={{
+        p: 2,
+        display: "flex",
+        alignItems: "center",
+        cursor: "pointer",
+      }}
+      onClick={handleLogoClick}
+    >
       <Box
         component="img"
         src={bulbPng}
-        alt="Logo"
-        onClick={handleLogoClick}
+        alt="Quiz Logo"
         sx={{
-          width: 30, 
+          width: 30,
           height: "auto",
-          cursor: "pointer",
           mr: 2,
           filter: "invert(1)",
         }}
       />
-      <Typography onClick={handleLogoClick} level="h3">
+      <Typography
+        level="h3"
+      >
         Quizz
       </Typography>
     </Box>

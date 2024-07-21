@@ -3,59 +3,44 @@ import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/joy";
 import Box from "@mui/joy/Box";
 import List from "@mui/joy/List";
-import ListItem from "@mui/joy/ListItem";
 import ListItemButton from "@mui/joy/ListItemButton";
 import ListItemContent from "@mui/joy/ListItemContent";
 import { KeyboardArrowRight } from "@mui/icons-material";
 import Divider from "@mui/joy/Divider";
-import Button from "@mui/joy/Button";
 import { motion, AnimatePresence } from "framer-motion";
 import { QuizContext } from "../../App";
-import MotionWrapper from "../../MotionWrapper"; // Import the custom MotionWrapper
+import MotionWrapper from "../../style/MotionWrapper";
+import CustomMotionButton from "../../style/MotionButton"; // Import CustomMotionButton
+import { fetchCategories } from "../../fetch/fetchCategories";
 
-// Create motion-enabled components
-const MotionButton = motion(Button);
 const MotionListItemButton = motion(ListItemButton);
 
 export default function Categories() {
   const navigate = useNavigate();
-  const {
-    currentQuestionIndex,
-    setSelectedCategoryAndReset,
-    loadingCategories,
-    setLoadingCategories,
-    quizCompleted,
-  } = useContext(QuizContext);
+  const { currentQuestionIndex, setSelectedCategoryAndReset, quizCompleted } =
+    useContext(QuizContext);
 
   const [categories, setCategories] = useState([]);
   const [quizInProgress, setQuizInProgress] = useState(false);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const loadCategories = async () => {
       try {
-        const response = await fetch("https://opentdb.com/api_category.php");
-        const data = await response.json();
-        setCategories(data.trivia_categories);
-        localStorage.setItem(
-          "categories",
-          JSON.stringify(data.trivia_categories)
-        );
-        setLoadingCategories(false);
+        const storedCategories = localStorage.getItem("categories");
+        if (storedCategories) {
+          setCategories(JSON.parse(storedCategories));
+        } else {
+          const categories = await fetchCategories();
+          setCategories(categories);
+          localStorage.setItem("categories", JSON.stringify(categories));
+        }
       } catch (error) {
-        console.error("Error fetching categories:", error);
-        setLoadingCategories(false);
+        console.error("Failed to load categories. Please try again.");
       }
     };
 
-    const storedCategories = localStorage.getItem("categories");
-    if (storedCategories) {
-      setCategories(JSON.parse(storedCategories));
-      setLoadingCategories(false);
-    } else {
-      setLoadingCategories(true);
-      fetchCategories();
-    }
-  }, [setLoadingCategories]);
+    loadCategories();
+  }, []);
 
   const handleCategorySelect = (category) => {
     setSelectedCategoryAndReset(category);
@@ -75,9 +60,7 @@ export default function Categories() {
   };
 
   return (
-    <AnimatePresence
-      mode="wait" // Ensures that the new element waits for the old one to exit
-    >
+    <AnimatePresence mode="wait">
       <MotionWrapper>
         <Box
           component="div"
@@ -89,13 +72,10 @@ export default function Categories() {
           }}
         >
           {quizInProgress && (
-            <MotionButton
+            <CustomMotionButton
               onClick={handleResumeQuiz}
               size="md"
               variant="outlined"
-              whileHover={{ scale: 1.1, backgroundColor: "#e0e0e0" }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
               sx={{
                 mt: 0,
                 mb: 2,
@@ -103,21 +83,19 @@ export default function Categories() {
               }}
             >
               Go back to quiz
-            </MotionButton>
+            </CustomMotionButton>
           )}
 
           <Box sx={{ maxWidth: "700px", width: "100%", textAlign: "left" }}>
-            {!loadingCategories && (
-              <Typography
-                level="h2"
-                sx={{
-                  mb: 2, // Margin-bottom for spacing
-                  color: "primary.main", // Example color
-                }}
-              >
-                Choose category
-              </Typography>
-            )}
+            <Typography
+              level="h2"
+              sx={{
+                mb: 2,
+                color: "primary.main",
+              }}
+            >
+              Choose category
+            </Typography>
           </Box>
 
           <Box sx={{ maxWidth: "700px", width: "100%" }}>

@@ -5,9 +5,9 @@ import "@fontsource/inter";
 
 import { CssVarsProvider } from "@mui/joy/styles";
 import { CssBaseline } from "@mui/material";
-import "./index.css"; 
+import "./style/index.css"; 
 
-import { theme } from "./theme";
+import { theme } from "./style/theme";
 
 import App from "./App";
 

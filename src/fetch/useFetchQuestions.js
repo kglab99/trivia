@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { fetchQuestions } from "../logic/fetchQuestions";
-import { decodeHTMLEntities } from "../logic/additional";
+import { fetchQuestions } from "./fetchQuestions";
+import { decodeHTMLEntities } from "../utils/additional";
 
 export default function useFetchQuestions(
   confirmed,

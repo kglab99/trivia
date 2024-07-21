@@ -4,11 +4,10 @@ import { getItem, setItem, clearAll } from './sessionStorageUtils';
 import { handleAnswer } from './handleAnswer';
 import { setSelectedCategoryAndReset } from './setSelectedCategoryAndReset';
 import { onQuestionsSliderSelect } from './onQuestionsSliderSelect';
-import useFetchQuestions from '../hooks/useFetchQuestions';
+import useFetchQuestions from '../fetch/useFetchQuestions';
 
 export const useQuizContext = () => {
   const [selectedCategory, setSelectedCategory] = useState(() => getItem("selectedCategory", true) || null);
-  const [loadingCategories, setLoadingCategories] = useState(true);
   const [numQuestions, setNumQuestions] = useState(() => getItem("numQuestions") || null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(() => getItem("currentQuestionIndex") || 0);
   const [userAnswers, setUserAnswers] = useState(() => getItem("userAnswers", true) || []);
@@ -65,7 +64,6 @@ export const useQuizContext = () => {
 
   return {
     selectedCategory,
-    loadingCategories,
     numQuestions,
     currentQuestionIndex,
     userAnswers,
@@ -75,7 +73,6 @@ export const useQuizContext = () => {
     confirmed,
     loading,
     setSelectedCategory,
-    setLoadingCategories,
     setNumQuestions,
     setCurrentQuestionIndex,
     setUserAnswers,

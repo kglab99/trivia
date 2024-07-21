@@ -1,14 +1,10 @@
-import { useState, useEffect } from "react";
 import { Box } from "@mui/joy";
-import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
 import { motion, AnimatePresence } from "framer-motion";
-import CustomMotionButton from "../../MotionButton";
-
-// Create a motion-enabled Button component
-const MotionButton = motion(Button);
+import useAnimationValues from "../../utils/useAnimationValues";
+import AnswerButtons from "./AnswerButtons"; // Import the new component
 
 export default function QuizQuestion({
   question,
@@ -16,32 +12,15 @@ export default function QuizQuestion({
   totalQuestions,
   handleAnswer,
 }) {
-  const [animationValues, setAnimationValues] = useState({ initialX: 1000, exitX: -1000 });
 
-  useEffect(() => {
-    const updateAnimationValues = () => {
-      if (window.innerWidth <= 600) { // Mobile width threshold
-        setAnimationValues({ initialX: 500, exitX: -500 });
-      } else {
-        setAnimationValues({ initialX: 1000, exitX: -1000 });
-      }
-    };
-
-    // Update animation values on component mount
-    updateAnimationValues();
-
-    // Add event listener to update animation values on screen resize
-    window.addEventListener("resize", updateAnimationValues);
-
-    // Clean up the event listener on component unmount
-    return () => window.removeEventListener("resize", updateAnimationValues);
-  }, []);
+  const animationValues = useAnimationValues();
 
   // Determine if the question is true/false by checking the possible answers
   const isTrueFalse =
     question.incorrect_answers.length === 1 &&
     question.incorrect_answers.includes("False") &&
     question.correct_answer === "True";
+
 
   return (
     <Box
@@ -53,19 +32,17 @@ export default function QuizQuestion({
         alignItems: "center",
         height: "80vh",
         justifyContent: "center",
-        overflow: "hidden", // Prevent overflow issues during animation
-        position: "relative", // Ensure relative positioning for child absolute positioning
+        overflow: "hidden",
+        position: "relative",
       }}
     >
-      <AnimatePresence
-        mode="popLayout" // Ensures that the new element waits for the old one to exit
-      >
+      <AnimatePresence mode="popLayout">
         <motion.div
           key={index} // Trigger animation when index changes
           initial={{ opacity: 0, x: animationValues.initialX }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: animationValues.exitX }}
-          transition={{ duration: 0.4, ease: "easeInOut" }} // Faster transition
+          transition={{ duration: 0.4, ease: "easeInOut" }}
           style={{
             position: "absolute",
             display: "flex",
@@ -73,8 +50,8 @@ export default function QuizQuestion({
             alignItems: "center",
             maxWidth: 640,
             width: "90%",
-            zIndex: 1, // Ensure the current question is on top
-          }} // Absolute positioning to prevent layout shift
+            zIndex: 1,
+          }}
         >
           <Card sx={{ maxWidth: 640, width: "90%", "--Card-padding": "16px" }}>
             <Box
@@ -104,33 +81,12 @@ export default function QuizQuestion({
               </Typography>
             </Box>
             <CardContent orientation="vertical">
-              {isTrueFalse ? (
-                <>
-                  <CustomMotionButton
-                    key={"true"}
-                    onClick={() => handleAnswer("True")}
-                  >
-                    True
-                  </CustomMotionButton>
-                  <CustomMotionButton
-                    key={"false"}
-                    onClick={() => handleAnswer("False")}
-                  >
-                    False
-                  </CustomMotionButton>
-                </>
-              ) : (
-                [...question.incorrect_answers, question.correct_answer].map(
-                  (answer, idx) => (
-                    <CustomMotionButton
-                      key={idx}
-                      onClick={() => handleAnswer(answer)}
-                    >
-                      {answer}
-                    </CustomMotionButton>
-                  )
-                )
-              )}
+            <AnswerButtons
+                isTrueFalse={isTrueFalse}
+                incorrect_answers={question.incorrect_answers}
+                correct_answer={question.correct_answer}
+                handleAnswer={handleAnswer}
+              />
             </CardContent>
           </Card>
         </motion.div>

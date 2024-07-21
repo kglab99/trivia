@@ -6,8 +6,9 @@ import Button from "@mui/joy/Button";
 import { useNavigate } from "react-router-dom";
 import { QuizContext } from "../../App";
 import Loading from "../Loading";
-import { motion, AnimatePresence } from "framer-motion";
-import MotionWrapper from "../../MotionWrapper"; // Import the custom MotionWrapper
+import { AnimatePresence } from "framer-motion";
+import MotionWrapper from "../../style/MotionWrapper"; // Import the custom MotionWrapper
+import { fetchQuestionCount } from "../../fetch/fetchQuestionCount"; // Import the fetch function
 
 export default function NumQuestionsChoice() {
   const {
@@ -26,22 +27,17 @@ export default function NumQuestionsChoice() {
 
   useEffect(() => {
     if (selectedCategory) {
-      const fetchQuestionCount = async () => {
+      const loadQuestionCount = async () => {
         try {
-          const response = await fetch(
-            `https://opentdb.com/api_count.php?category=${selectedCategory.id}`
-          );
-          const data = await response.json();
-          const totalQuestions =
-            data.category_question_count.total_question_count;
+          const totalQuestions = await fetchQuestionCount(selectedCategory.id);
           const maxQuestionCount = Math.min(50, totalQuestions);
           setMaxQuestions(maxQuestionCount);
         } catch (error) {
-          console.error("Error fetching question count:", error);
+          console.error("Failed to load question count.");
         }
       };
 
-      fetchQuestionCount();
+      loadQuestionCount();
       setTimeout(() => {
         setReadyToFetch(true);
       }, 3000);
@@ -74,11 +70,9 @@ export default function NumQuestionsChoice() {
   }
 
   return (
- <AnimatePresence
-        mode="wait" // Ensures that the new element waits for the old one to exit
-      >      {!loading && (
-    <MotionWrapper>
-
+    <AnimatePresence mode="wait">
+      {!loading && (
+        <MotionWrapper>
           <Box
             component="div"
             sx={{
@@ -93,7 +87,6 @@ export default function NumQuestionsChoice() {
                 level="h2"
                 sx={{
                   mb: 2,
-                  
                   color: "primary.main",
                 }}
               >
@@ -114,9 +107,10 @@ export default function NumQuestionsChoice() {
                 maxWidth: "680px",
                 width: "90%",
                 "& .MuiSlider-thumb": {
-                  backgroundColor: "primary", // Same color as border
+                  backgroundColor: "primary",
                 },
-                "& .MuiSlider-thumb:hover, & .MuiSlider-thumb.Mui-focusVisible, & .MuiSlider-thumb.Mui-active": {},
+                "& .MuiSlider-thumb:hover, & .MuiSlider-thumb.Mui-focusVisible, & .MuiSlider-thumb.Mui-active":
+                  {},
               }}
             />
             <Typography
@@ -141,7 +135,7 @@ export default function NumQuestionsChoice() {
               Confirm
             </Button>
           </Box>
-              </MotionWrapper>
+        </MotionWrapper>
       )}
     </AnimatePresence>
   );
