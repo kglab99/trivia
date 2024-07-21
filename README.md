@@ -37,7 +37,7 @@ quizz-app/
 │   │   │   ├── QuizQuestion.jsx
 │   │   │   └── QuizResults.jsx
 │   │   ├── Loading.jsx
-│   │   ├── TopBar.jsx
+│   │   └── TopBar.jsx
 │   ├── fetch/
 │   │   ├── fetchCategories.js
 │   │   ├── fetchQuestionCount.js
@@ -46,16 +46,16 @@ quizz-app/
 │   ├── style/
 │   │   ├── index.css
 │   │   ├── MotionButton.jsx
-│   │   └── MotionWrapper.jsx
+│   │   ├── MotionWrapper.jsx
 │   │   └── theme.js
-│   ├── utils/
-│   │   ├── additional.js
-│   │   ├── handleAnswer.js
-│   │   ├── onQuestionsSliderSelect.js
-│   │   ├── quizContext.js
-│   │   ├── sessionStorageUtils.js
-│   │   ├── setSelectedCategoryAndReset.js
-│   │   └── useAnimationValues.js
+│   └── utils/
+│       ├── additional.js
+│       ├── handleAnswer.js
+│       ├── onQuestionsSliderSelect.js
+│       ├── quizContext.js
+│       ├── sessionStorageUtils.js
+│       ├── setSelectedCategoryAndReset.js
+│       └── useAnimationValues.js
 │   ├── App.jsx
-│   ├── main.jsx
-│   └── ...
+│   └── main.jsx
+
