@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+Gitarka
+
 const useAnimationValues = () => {
   const [animationValues, setAnimationValues] = useState({
     initialX: 1000,

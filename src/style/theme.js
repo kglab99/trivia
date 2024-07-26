@@ -1,5 +1,5 @@
 import { extendTheme } from "@mui/joy/styles";
-
+Fajnie ze theme masz jako variable +
 export const theme = extendTheme({
   colorSchemes: {
     main: {

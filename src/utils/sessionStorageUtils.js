@@ -1,3 +1,5 @@
+Gitarka
+
 export const getItem = (key, parse = false) => {
   const saved = sessionStorage.getItem(key);
   return saved ? (parse ? JSON.parse(saved) : saved) : null;

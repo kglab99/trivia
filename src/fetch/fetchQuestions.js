@@ -7,6 +7,7 @@ async function fetchQuestions(categoryId, numQuestions, retries = 3) {
 
       if (response.status === 429) {
         if (attempts > 0) {
+          bardzo fajnie ze jest komentarz z wytlumaczeniem nieoczywistego case
           //Api often return 429 error as it allows 1 request per 5 sec per IP, 
           //this fallback guarantees fetch when 1 attempt isnt successfull
           console.error("Rate limit hit. Retrying...");

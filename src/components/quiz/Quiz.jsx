@@ -6,6 +6,11 @@ import { QuizContext } from "../../App";
 const Quiz = () => {
   const navigate = useNavigate();
   const { questionIndex } = useParams();
+
+  uwazaj z definiowaniem wszystkiego w contexcie, 
+  state powinien byc tak lokalny jak tylko moze byc
+  moze to byl dobry pomysl/moze nie ciezko mi tak z boku powiedziec
+  ale po prostu pamietaj zeby nie pchac wszystkiego na pale do globalnego store/contextu
   const {
     quizCompleted,
     questions = [],
@@ -16,7 +21,7 @@ const Quiz = () => {
   const index = parseInt(questionIndex, 10);
 
   useEffect(() => {
-
+    to mogloby byc w jakims guardzie w routerze ale nie musi
     if (Array.isArray(questions) && questions.length > 0) {
       if (index < 0 || index >= questions.length) {
         navigate("/quiz-results");

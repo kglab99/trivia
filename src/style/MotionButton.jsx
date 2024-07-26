@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import Button from '@mui/joy/Button';
 
 const MotionButton = motion(Button);
-
+To samo co z wrapperem
 const CustomMotionButton = ({ children, onClick, sx = {}, ...props }) => {
   return (
     <MotionButton

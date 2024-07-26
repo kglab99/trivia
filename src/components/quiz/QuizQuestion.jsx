@@ -38,6 +38,7 @@ export default function QuizQuestion({
     >
       <AnimatePresence mode="popLayout">
         <motion.div
+        + za uzywanie key a nie probe triggerowania w jakichs dziwnych listenerach
           key={index} // Trigger animation when index changes
           initial={{ opacity: 0, x: animationValues.initialX }}
           animate={{ opacity: 1, x: 0 }}

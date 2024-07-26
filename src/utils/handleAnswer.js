@@ -1,3 +1,5 @@
+to mogloby byc wewnatrz componentu/byc przekazane jako props od widoku
+
 export const handleAnswer = (
     answer,
     questions,

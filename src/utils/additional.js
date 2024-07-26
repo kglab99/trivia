@@ -1,4 +1,5 @@
 // Function to decode HTML entities
+nazwa od czapy, to nic nie decoduje tylko tworzy textarea i ustawia w nim wartosc
 export const decodeHTMLEntities = (text) => {
   const textArea = document.createElement("textarea");
   textArea.innerHTML = text;
@@ -14,3 +15,6 @@ export const shuffleArray = (array) => {
   }
   return shuffledArray;
 };
+
+nazywanie tego additional.js sredniawka, lepiej rozbic na dwa pliki
+nic nie kosztuje a patrzac na nazwe pliku od razu wiesz czego sie spodziewac

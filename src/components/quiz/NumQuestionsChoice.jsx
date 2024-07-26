@@ -37,6 +37,14 @@ export default function NumQuestionsChoice() {
         }
       };
 
+      skad wziales boie 3000?
+      co jeslti fetchQuestionCount zajmie 4000ms?
+      to jest zwyklye async await na loadQuestionCount i potem masz to swoje setReadyToFetch
+      czyli 
+      useEffect(async () => {
+        await loadQuestionCount();
+        setReadyToFetch(true);
+      })
       loadQuestionCount();
       setTimeout(() => {
         setReadyToFetch(true);

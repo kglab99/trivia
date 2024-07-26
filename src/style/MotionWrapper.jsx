@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import useAnimationValues from "../utils/useAnimationValues"; // Import the custom hook
-
+cool pomysl zeby robic sobie wrappery stricte do animacji
+jedyne co to moglby byc bardziej generyczny i przyjmowac wartosci 
+tranzycji/animacje jako param -> bo teraz to nie do konca MotionWrapper tylko KonkretnaAnimacjaZnikaniaWrapper
+to tez jest okej ale wtedy bardziej specific nazwa potrzebna
 const MotionWrapper = ({ children, ...props }) => {
   const { initialX, exitX } = useAnimationValues();
 

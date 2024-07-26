@@ -37,6 +37,7 @@ export default function QuizResults() {
       setCorrectAnswers(correct);
       setIncorrectAnswers(incorrect);
 
+      to bym jakims wrapperem ogarnal
       sessionStorage.setItem(
         "quizResults",
         JSON.stringify({

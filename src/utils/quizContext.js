@@ -4,7 +4,7 @@ import { handleAnswer } from './handleAnswer';
 import { setSelectedCategoryAndReset } from './setSelectedCategoryAndReset';
 import { onQuestionsSliderSelect } from './onQuestionsSliderSelect';
 import useFetchQuestions from '../fetch/useFetchQuestions';
-
+fajnie ze tutaj logika wyjeta na zewnatrz bo sporo tu tego jest
 export const useQuizContext = () => {
 
   const [selectedCategory, setSelectedCategory] = useState(() => getItem("selectedCategory", true) || null);

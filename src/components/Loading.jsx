@@ -8,6 +8,8 @@ export default function Loading() {
 
   return (
     <AnimatePresence mode="wait">
+      to nie jest taka sama animacja co w MotionWrapper? jesli sie niewiele
+      rozni powinienes uzyc MotionWrapper i dac mu odpowiednie propsy
       <motion.div
         initial={{ opacity: 1, x: initialX }}
         animate={{ opacity: 1, x: 0 }}

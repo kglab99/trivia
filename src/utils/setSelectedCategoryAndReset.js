@@ -1,3 +1,11 @@
+troche potworka tu stworzyles. 
+lepiej by bylo zrobic jakis helper ktory jest generyczny 
+i wrapuje useState, np useSessionStorageState i tam sobie te logike zebrac
+wtedy w komponencie zamiast
+const [selectedCategory, setSelectedCategory] = useState(() => getItem("selectedCategory", true) || null);
+bys mial 
+const [selectedCategory, setSelectedCategory] = useSessionStorageState('PROPERTY_NAME', 'DEFAULT_VALUE');
+duzo czysciej i less coupled (idk jak to po polsku powiedziec xD)
 export const setSelectedCategoryAndReset = (
     category,
     setSelectedCategory,

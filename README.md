@@ -1,5 +1,8 @@
 # Trivia app
-
+brakuje prerequisites do uruchomienia -> jak ktos nie pracowal z npm skad wie ze ma miec node i npm zainstalowane
+pod jaka wersja node dziala apka? 20? 16? -> to robi potem zjebane problemy do debugowania
+jak uruchomic apke? skad mam znac npm run dev? -> czasem jest npm run serve/start, jasne mozna se sprawdzic w package.json ale lepiej dac userom znac
+Bardzo wazna lekturka: https://git-scm.com/docs/gitignore, .gitignore powinien byc spushowany do repo
 ## [Live preview](https://trivia-joy-ui.netlify.app/)
 
 ## Overview
